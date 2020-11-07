@@ -51,7 +51,7 @@ class RegisterForm extends Component {
         <div className='form-control'>
           <div className='row'>
             <button type='submit' className='button button-primary col-lg-12'>
-              Registrarmes
+              Registrarme
             </button>
           </div>
         </div>

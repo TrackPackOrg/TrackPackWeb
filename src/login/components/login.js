@@ -2,12 +2,11 @@ import LoginForm from '../containers/login_form';
 
 function LoginBox() {
   return (
-    <section className=''>
-      <div className='row kas'>
-        <div className='col col-lg-4'>
+    <section>
+      <div className='container container-large'>
+        <div className='containeer is-hcentered col col-sm-10'>
           <div className='card'>
-            <h3>Inicio de Sesión</h3>
-
+            <h3 className='card-title'>Inicio de Sesión</h3>
             <LoginForm />
           </div>
         </div>

@@ -2,11 +2,11 @@ import RegisterForm from '../containers/register_form';
 
 function RegisterBox() {
   return (
-    <section className=''>
-      <div className='row kas'>
-        <div className='col col-lg-4'>
+    <section styles='width:100%'>
+      <div className='row'>
+        <div className='is-hcentered col col-sm-10'>
           <div className='card'>
-            <h3>¡Regístrate!</h3>
+            <h3 className='card-title'>¡Regístrate!</h3>
 
             <RegisterForm />
           </div>
