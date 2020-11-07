@@ -41,7 +41,6 @@ class RegisterForm extends Component {
               disabled={true}
             ></input>
             <input
-              type='text'
               type='tel'
               // pattern='[0-9]{4}-[0-9]{4}'
               placeholder='0000-0000'
