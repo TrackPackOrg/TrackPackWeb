@@ -6,12 +6,14 @@ class AddressTable extends Component {
     this.state = {
       address: [
         {
+          id: 1,
           departamento: 'Comayagua',
           municipio: 'Comayagua',
           direccion: 'Una direccion en algún lugar',
           coordenadas: '12.12321, 122.1231',
         },
         {
+          id: 2,
           departamento: 'La Paz',
           municipio: 'San Jose',
           direccion: 'cerca del campo',
@@ -19,15 +21,18 @@ class AddressTable extends Component {
         },
       ],
     };
+    this.funcionPrueba = this.funcionPrueba.bind(this);
+  }
+
+  funcionPrueba(addressId) {
+    console.log('esto es un texto');
   }
 
   //functions
-
   render() {
     return (
       <section>
-        <div className='container'>
-          <h1 class='h2'>Direccion</h1>
+        <div className=''>
           <table>
             <thead>
               <tr>
@@ -42,25 +47,24 @@ class AddressTable extends Component {
               {/* Debe ir una   funcion que itere entre las direcciones
                      y cree las rows */}
 
-              {this.state.address.map((address, index) => {
+              {this.state.address.map((address) => {
                 return (
-                  <tr key={index}>
+                  <tr key={address.id}>
                     <td>{address.departamento}</td>
                     <td>{address.municipio}</td>
                     <td>{address.direccion}</td>
                     <td>{address.coordenadas}</td>
-                    <button className='button button-secondary'>
-                      {' '}
-                      Editar
-                    </button>{' '}
-                    <button className='button button-primary'>
-                      {' '}
-                      Elimiar
-                    </button>{' '}
+                    <button
+                      className='button button-secondary'
+                      value={address.id}
+                      onClick={this.funcionPrueba(address.id)}
+                    >
+                      editar
+                    </button>
+                    <button className='button button-primary'>Elimiar</button>
                   </tr>
                 );
               })}
-
               <tr>
                 {/* Se usa texto  de demo demomento */}
                 <td>Hola</td>
@@ -76,5 +80,4 @@ class AddressTable extends Component {
     );
   }
 }
-
 export default AddressTable;
