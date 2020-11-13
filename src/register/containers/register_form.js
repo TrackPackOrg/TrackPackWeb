@@ -9,6 +9,7 @@ class RegisterForm extends Component {
       lastname: '',
       email: '',
       password: '',
+      passwordVerif: '',
       phone: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -17,7 +18,6 @@ class RegisterForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
 
     const user = {
       nombre: this.state.name,
@@ -26,8 +26,13 @@ class RegisterForm extends Component {
       passwd: this.state.password,
       telefono: this.state.phone,
     };
-    axios.post('http://localhost:3300/customer', { user });
+
+    axios.post('http://localhost:3300/customer', user).catch((err) => {
+      return err.message;
+    });
   }
+
+  componentDidCatch() {}
 
   handleChange(e) {
     this.setState({
@@ -84,14 +89,14 @@ class RegisterForm extends Component {
           <label>Teléfono</label>
           <div className='row'>
             <input
-              name='phone'
-              onChange={this.handleChange}
               type='text'
               value='504'
               className='align-right col   col-lg-2'
               disabled={true}
             ></input>
             <input
+              name='phone'
+              onChange={this.handleChange}
               type='tel'
               // pattern='[0-9]{4}-[0-9]{4}'
               placeholder='0000-0000'
