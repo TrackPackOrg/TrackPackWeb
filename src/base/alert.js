@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React, { Component } from 'react';
 
 class Alert extends Component {
@@ -7,7 +6,7 @@ class Alert extends Component {
     this.state = {};
   }
   render() {
-    return <p className={this.props.classes}>{this.props.message}</p>;
+    return <p className={this.props.classes}>{this.props.message} </p>;
   }
 }
 

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Alert from '../../base/alert';
 
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      redirect: null,
       name: '',
       lastname: '',
       email: '',
@@ -24,7 +26,6 @@ class RegisterForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
     this.validatePassword(this.state.password, this.state.passwordVerif);
 
     const user = {
@@ -37,13 +38,17 @@ class RegisterForm extends Component {
     if (this.state.passwordsDidMatch === true) {
       axios
         .post('http://localhost:3300/customer', user)
-        // .then((res) => {
-        //   this.setState({
-        //     displayAlert: true,
-        //     alertContent: res.data.message,
-        //     alertclasses: ['alert alert-success'],
-        //   });
-        // })
+        .then((res) => {
+          if (res.data.ok) {
+            localStorage.setItem('clientId', res.data.clientId);
+            this.setState({
+              redirect: '/email-verification',
+              displayAlert: true,
+              alertContent: 'Tu registro se realizó con éxito',
+              alertclasses: ['alert alert-success'],
+            });
+          }
+        })
         .catch((err) => {
           this.setState({
             displayAlert: true,
@@ -68,7 +73,7 @@ class RegisterForm extends Component {
         alertContent: 'Las contraseñas no coinciden.',
         alertclasses: 'alert alert-danger',
       });
-    } else if (pass1 == pass2) {
+    } else if (pass1 === pass2) {
       this.setState({
         passwordsDidMatch: true,
       });
@@ -145,7 +150,6 @@ class RegisterForm extends Component {
               onChange={this.handleChange}
               type='tel'
               pattern='[3,9,8,2]{1}[0-9]{7}'
-              required
               placeholder='0000-0000'
               className='col-lg-3'
             ></input>
@@ -158,6 +162,7 @@ class RegisterForm extends Component {
             </button>
           </div>
         </div>
+        {this.state.redirect ? <Redirect to={this.state.redirect} /> : null}
       </form>
     );
   }
