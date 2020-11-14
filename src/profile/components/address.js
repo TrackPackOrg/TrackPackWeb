@@ -1,4 +1,5 @@
 import AddressTable from '../containers/address-table';
+
 function AddressBox() {
   return (
     <section>

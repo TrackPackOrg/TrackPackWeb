@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import Alert from '../../base/alert';
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -10,7 +11,12 @@ class RegisterForm extends Component {
       email: '',
       password: '',
       passwordVerif: '',
+      passwordsDidMatch: null,
       phone: '',
+      phoneExt: '504',
+      displayAlert: false,
+      alertContent: '',
+      alertclasses: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,20 +25,34 @@ class RegisterForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
+    this.validatePassword(this.state.password, this.state.passwordVerif);
+
     const user = {
       nombre: this.state.name,
       apellido: this.state.lastname,
       correo: this.state.email,
       passwd: this.state.password,
-      telefono: this.state.phone,
+      telefono: this.state.phoneExt + this.state.phone,
     };
-
-    axios.post('http://localhost:3300/customer', user).catch((err) => {
-      return err.message;
-    });
+    if (this.state.passwordsDidMatch === true) {
+      axios
+        .post('http://localhost:3300/customer', user)
+        // .then((res) => {
+        //   this.setState({
+        //     displayAlert: true,
+        //     alertContent: res.data.message,
+        //     alertclasses: ['alert alert-success'],
+        //   });
+        // })
+        .catch((err) => {
+          this.setState({
+            displayAlert: true,
+            alertContent: err.response.data.error,
+            alertclasses: 'alert alert-danger',
+          });
+        });
+    }
   }
-
-  componentDidCatch() {}
 
   handleChange(e) {
     this.setState({
@@ -40,9 +60,30 @@ class RegisterForm extends Component {
     });
   }
 
+  validatePassword(pass1, pass2) {
+    if (pass1 !== pass2) {
+      this.setState({
+        passwordsDidMatch: false,
+        displayAlert: true,
+        alertContent: 'Las contraseñas no coinciden.',
+        alertclasses: 'alert alert-danger',
+      });
+    } else if (pass1 == pass2) {
+      this.setState({
+        passwordsDidMatch: true,
+      });
+    }
+  }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
+        {this.state.displayAlert ? (
+          <Alert
+            message={this.state.alertContent}
+            classes={this.state.alertclasses}
+          />
+        ) : null}
         <div className='row'>
           <div className='form-control col col-lg-6'>
             <label className=''>Nombre</label>
@@ -83,14 +124,19 @@ class RegisterForm extends Component {
         </div>
         <div className='form-control'>
           <label>Confirma tu contraseña</label>
-          <input type='password' placeholder='•••••••••••••' />
+          <input
+            name='passwordVerif'
+            onChange={this.handleChange}
+            type='password'
+            placeholder='•••••••••••••'
+          />
         </div>
         <div className='form-control col col-2'>
           <label>Teléfono</label>
           <div className='row'>
             <input
               type='text'
-              value='504'
+              value={this.state.phoneExt}
               className='align-right col   col-lg-2'
               disabled={true}
             ></input>
@@ -98,7 +144,8 @@ class RegisterForm extends Component {
               name='phone'
               onChange={this.handleChange}
               type='tel'
-              // pattern='[0-9]{4}-[0-9]{4}'
+              pattern='[3,9,8,2]{1}[0-9]{7}'
+              required
               placeholder='0000-0000'
               className='col-lg-3'
             ></input>

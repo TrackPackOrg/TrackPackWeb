@@ -1,11 +1,10 @@
 import AddressBox from './components/address';
-import React, { Component } from 'react';
-
+import UserProfile from './containers/user-profile';
 function Profile() {
   return (
     <div className='row'>
       <div className='col col-lg-4'>
-        <h2></h2>
+        <UserProfile />
       </div>
       <div className='col col-lg-8'>
         <AddressBox />

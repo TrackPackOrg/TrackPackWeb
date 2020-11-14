@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import NewAddressModal from './new-address-modal';
 
 class AddressTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalIsVisible: false,
       address: [
         {
           id: 1,
@@ -21,18 +23,23 @@ class AddressTable extends Component {
         },
       ],
     };
-    this.funcionPrueba = this.funcionPrueba.bind(this);
-  }
-
-  funcionPrueba(addressId) {
-    console.log('esto es un texto');
   }
 
   //functions
   render() {
     return (
       <section>
+        <button
+          className='button float-right'
+          onClick={() => {
+            this.setState({ modalIsVisible: true });
+          }}
+        >
+          Nueva
+        </button>
         <div className=''>
+          {this.state.modalIsVisible ? <NewAddressModal /> : null}
+
           <table>
             <thead>
               <tr>
@@ -57,7 +64,6 @@ class AddressTable extends Component {
                     <button
                       className='button button-secondary'
                       value={address.id}
-                      onClick={this.funcionPrueba(address.id)}
                     >
                       editar
                     </button>
