@@ -1,15 +1,15 @@
 <template>
-  <div id="app"></div>
+  <v-app> </v-app>
 </template>
 
 <script>
 export default {
   name: 'App',
+
   components: {},
-  data() {
-    return {};
-  },
+
+  data: () => ({
+    //
+  }),
 };
 </script>
-
-<style></style>
