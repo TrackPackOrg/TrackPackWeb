@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="is-absolute-centered column is-two-fifhts">
         <div class="card">
-          <div v-if="!isCodeSent">
+          <div v-show="!codigoEnviado">
             <div class="card-image">
               <figure class="image">
                 <img
@@ -13,6 +13,7 @@
               </figure>
             </div>
             <div class="card-content">
+              <alerta v-if="this.dioError" :error="this.error" />
               <form>
                 <div class="columns m">
                   <label for="nombre" class="column">Nombre</label>
@@ -27,7 +28,7 @@
                       type="text"
                       icon-pack="fas"
                       icon="signature"
-                      class=""
+                      v-model="nombre"
                     >
                     </b-input>
                   </b-field>
@@ -38,7 +39,7 @@
                       type="text"
                       placeholder="Apellido"
                       icon="signature"
-                      class=""
+                      v-model="apellido"
                     >
                     </b-input>
                   </b-field>
@@ -47,12 +48,12 @@
                 <b-field class="">
                   <b-input
                     required
-                    name="corre"
+                    name="correo"
                     placeholder="Correo electrónico"
                     type="email"
                     icon-pack="fas"
                     icon="envelope"
-                    class=""
+                    v-model="correo"
                   >
                   </b-input>
                 </b-field>
@@ -67,7 +68,7 @@
                     type="password"
                     icon-pack="fas"
                     icon="lock"
-                    class=""
+                    v-model="contra"
                   >
                   </b-input>
                 </b-field>
@@ -82,7 +83,7 @@
                     type="password"
                     icon-pack="fas"
                     icon="lock"
-                    class=""
+                    v-model="verifContra"
                   >
                   </b-input>
                 </b-field>
@@ -96,56 +97,22 @@
                     required
                     icon-pack="fas"
                     icon="phone"
-                    class=""
+                    v-model="telefono"
                   >
                   </b-input>
                 </b-field>
-                <b-button expanded type="is-primary">Registrarme</b-button>
+                <b-button @click="enviarForm()" expanded type="is-primary"
+                  >Registrarme</b-button
+                >
               </form>
 
               <br />
-              <a href="/recoverpasword">He olvidado mi contraseña</a>
+              <a href="/">Iniciar Sesión</a>
               <br />
-              <br />
-
-              <label
-                >¿Eres nuevo por aquí?
-                <span
-                  ><a href="/registrarse">¡Regístrate gratis!</a></span
-                ></label
-              >
             </div>
           </div>
-          <div v-if="isCodeSent">
-            <div class="card-image">
-              <figure class="image">
-                <img src="../assets/code-image.jpg" alt="Placeholder image" />
-              </figure>
-            </div>
-            <div class="card-content">
-              <p class="title is-5">Revisa tu correo electónico.</p>
-              <p>
-                Recibirás un código de verificacion de 6 dígitos.
-              </p>
-              <form>
-                <label for="telefono"
-                  >Ingresalo para verificar tu correo.</label
-                >
-                <b-field class="">
-                  <b-input
-                    name="telefono"
-                    placeholder="Código"
-                    type="tel"
-                    required
-                    icon="hashtag"
-                    class=""
-                  >
-                  </b-input>
-                </b-field>
-                <a href="/perfil">Ir a perfil</a>
-                <b-button expanded type="is-primary">Verificar</b-button>
-              </form>
-            </div>
+          <div v-show="this.codigoEnviado">
+            <VerificacionCodigo />
           </div>
         </div>
       </div>
@@ -154,13 +121,65 @@
 </template>
 
 <script>
+import Alerta from '@/components/alerta.vue';
+import VerificacionCodigo from '@/components/verifcodigo.registrarse.vue';
+
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'Home',
-  components: {},
+  components: {
+    Alerta,
+    VerificacionCodigo,
+  },
+
+  methods: {
+    ...mapActions('usuario', [
+      'registrarUsuario',
+      'dioErrorVerifContra',
+      'dioErrorCamposVacios',
+    ]),
+    enviarForm() {
+      if (this.camposLlenos) {
+        if (this.verifContra === this.contra) {
+          const nuevoUsuario = {
+            nombre: this.nombre,
+            apellido: this.apellido,
+            correo: this.correo,
+            passwd: this.contra,
+            telefono: this.telefono,
+          };
+          this.registrarUsuario(nuevoUsuario);
+          this.$forceUpdate();
+        } else {
+          this.dioErrorVerifContra();
+        }
+      } else {
+        this.dioErrorCamposVacios();
+      }
+    },
+  },
   data() {
     return {
-      isCodeSent: true,
+      nombre: '',
+      apellido: '',
+      correo: '',
+      contra: '',
+      verifContra: '',
+      telefono: '',
     };
+  },
+  computed: {
+    ...mapGetters('usuario', ['dioError', 'error', 'codigoEnviado']),
+    camposLlenos() {
+      if (this.nombre === '') return false;
+      if (this.apellido === '') return false;
+      if (this.correo === '') return false;
+      if (this.contra === '') return false;
+      if (this.verifContra === '') return false;
+      if (this.telefono === '') return false;
+      return true;
+    },
   },
 };
 </script>

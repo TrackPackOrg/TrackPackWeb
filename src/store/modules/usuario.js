@@ -1,31 +1,47 @@
-//import axios from 'axios';
+import axios from 'axios';
 
 const state = {
-  id: 1,
-  nombre: 'Admin',
-  apellido: 'Trackpack',
-  correo: 'admin@trackpack.com',
-  contra: '1234',
-  telefono: '+50487616959',
+  token: null,
+  dioError: null,
+  error: null,
+  codigoEnviado: localStorage.getItem('codigoEnviado'),
 };
 
 const getters = {
-  storeid: (state) => state.id,
-  storenombre: (state) => state.nombre,
-  storeapellido: (state) => state.apellido,
-  storecorreo: (state) => state.correo,
-  storecontra: (state) => state.contra,
-  storetelefono: (state) => state.telefono,
+  token: (state) => state.token,
+  dioError: (state) => state.dioError,
+  error: (state) => state.error,
+  codigoEnviado: (state) => state.codigoEnviado,
 };
 
 const actions = {
-  cambiarNombre({ commit }) {
-    commit('setName', 'Eduardo');
+  // eslint-disable-next-line no-unused-vars
+  async registrarUsuario({ commit }, nuevoUsuario) {
+    try {
+      await axios.post('http://localhost:3300/customer', nuevoUsuario);
+      localStorage.setItem('codigoEnviado', true);
+      console.log(localStorage.getItem('codigoEnviado'));
+      commit('setCodigoEnviado', localStorage.getItem('codigoEnviado'));
+    } catch (err) {
+      commit('setDioError');
+      commit('setError', err.response.data.error);
+    }
+  },
+
+  dioErrorVerifContra({ commit }) {
+    commit('setDioError');
+    commit('setError', 'Las contraseñas no coinciden.');
+  },
+  dioErrorCamposVacios({ commit }) {
+    commit('setDioError');
+    commit('setError', 'Todos los campos son obligatorios.');
   },
 };
 
 const mutations = {
-  setName: (state, nombre) => (state.nombre = nombre),
+  setDioError: (state) => (state.dioError = true),
+  setError: (state, mensaje) => (state.error = mensaje),
+  setCodigoEnviado: (state, estado) => (state.codigoEnviado = estado),
 };
 
 export default {
@@ -33,4 +49,5 @@ export default {
   getters,
   actions,
   mutations,
+  namespaced: true,
 };

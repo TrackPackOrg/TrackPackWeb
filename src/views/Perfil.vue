@@ -14,7 +14,7 @@
             </h4>
             <p>
               <strong>Teléfono:</strong> {{ this.storetelefono }}
-              <span @click="this.alertT">
+              <span>
                 <b-icon pack="fas" icon="edit" size="is-small"> </b-icon>
               </span>
             </p>
@@ -24,6 +24,26 @@
               <h3 class="title is-3">Mis cargas</h3>
               <TablaCargas />
             </div>
+            <br />
+            <br />
+            <a @click="this.launchModal">Ver mis direcciones</a>
+
+            <b-modal v-model="isModalActive" class="columns is-vcentered">
+              <div class="card column is-two-thirds is-absolute-centered">
+                <h1 class="title">Hello</h1>
+                <template>
+                  <b-table :data="data" :columns="columns">
+                    <b-table-column
+                      field="id"
+                      label="Dirección"
+                      width="40"
+                      numeric
+                    >
+                    </b-table-column>
+                  </b-table>
+                </template>
+              </div>
+            </b-modal>
           </div>
         </div>
       </div>
@@ -45,13 +65,15 @@ export default {
   },
   methods: {
     ...mapActions(['cambiarNombre']),
-    alertT() {
-      alert('En vez de esto se debe mostrar modal para modificar número');
+    launchModal() {
+      this.isModalActive = true;
+      console.log(this.isModalActive);
     },
   },
   data() {
     return {
       isCodeSent: true,
+      isModalActive: false,
     };
   },
   computed: mapGetters(['storenombre', 'storeapellido', 'storetelefono']),
