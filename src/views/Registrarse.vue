@@ -12,8 +12,8 @@
                 />
               </figure>
             </div>
+            <Alerta v-if="this.dioError" :error="this.error" />
             <div class="card-content">
-              <alerta v-if="this.dioError" :error="this.error" />
               <form>
                 <div class="columns m">
                   <label for="nombre" class="column">Nombre</label>
@@ -111,7 +111,7 @@
               <br />
             </div>
           </div>
-          <div v-show="this.codigoEnviado">
+          <div v-show="codigoEnviado">
             <VerificacionCodigo />
           </div>
         </div>
@@ -170,7 +170,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('usuario', ['dioError', 'error', 'codigoEnviado']),
+    ...mapGetters('usuario', ['dioError', 'error', 'token', 'codigoEnviado']),
     camposLlenos() {
       if (this.nombre === '') return false;
       if (this.apellido === '') return false;

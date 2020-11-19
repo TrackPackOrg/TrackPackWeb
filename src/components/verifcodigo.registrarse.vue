@@ -6,6 +6,8 @@
       </figure>
     </div>
     <div class="card-content">
+      <Alerta v-if="this.dioError" :error="this.error" />
+
       <p class="title is-5">Revisa tu correo electónico.</p>
       <p>
         Recibirás un código de verificacion de 6 dígitos.
@@ -19,22 +21,42 @@
             type="tel"
             required
             icon="hashtag"
-            class=""
+            v-model="codigo"
+            maxlength="6"
           >
           </b-input>
         </b-field>
         <a href="/perfil">Ir a perfil</a>
-        <b-button expanded type="is-primary">Verificar</b-button>
+        <b-button expanded type="is-primary" @click="enviarCodigo()"
+          >Verificar</b-button
+        >
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import Alerta from '@/components/alerta.vue';
+
 //Aqui logica del componente
 export default {
   name: 'VerificacionCodigo',
-  components: {},
+  components: { Alerta },
+  data() {
+    return {
+      codigo: '',
+    };
+  },
+  methods: {
+    ...mapActions('usuario', ['verifCodigo']),
+    enviarCodigo() {
+      this.verifCodigo(this.codigo);
+    },
+  },
+  computed: {
+    ...mapGetters('usuario', ['dioError', 'error']),
+  },
 };
 </script>
 
