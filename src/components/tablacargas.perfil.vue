@@ -1,30 +1,65 @@
 <template>
   <div class="tabla-cargas">
+    <div class="modal-direcciones">
+      <b-modal v-model="modalCargaActivo" class="columns is-vcentered">
+        <div class="card column is-two-thirds is-absolute-centered">
+          <h1 class="title">Nueva Carga</h1>
+          <b-field label="Selecciona la dirección de entrega de tu carga">
+            <b-select
+              placeholder="Selecciona dirección"
+              expanded
+              v-model="idDireccion"
+            >
+              <option
+                v-for="direccion in direcciones"
+                :key="direccion.idDireccion"
+                :value="direccion.idDireccion"
+                >{{ direccion.direccion }}, {{ direccion.departamento }}</option
+              >
+            </b-select>
+          </b-field>
+          <b-button
+            class="m-2"
+            type="is-primary"
+            @click="crearNuevaCarga"
+            expanded
+            >Crear</b-button
+          >
+        </div>
+      </b-modal>
+    </div>
+
     <div class="card columns">
       <div class="column is-one-third custom-scrollbar">
         <b-table
+          @click="cambioSeleccion()"
           height="300"
           sticky-header
-          :data="dataCarga"
+          :data="cargas"
           :columns="columnCarga"
           :selected.sync="selected"
         ></b-table>
         <div class="columns">
-          <b-button class="column" expanded inverted type="is-primary"
+          <b-button
+            class="column"
+            expanded
+            inverted
+            type="is-primary"
+            @click="launchModal"
             >Nueva carga</b-button
           >
         </div>
       </div>
       <div class="column">
-        <b-table height="300" sticky-header :data="data">
+        <b-table height="300" sticky-header :data="paquetes">
           <b-table-column
-            field="id"
+            field="idPaquete"
             label="Nº Rastreo"
             width="40"
             numeric
             v-slot="props"
           >
-            {{ props.row.id }}
+            {{ props.row.idCarga }}
           </b-table-column>
           <b-table-column
             field="currier"
@@ -33,7 +68,7 @@
             numeric
             v-slot="props"
           >
-            {{ props.row.currier }}
+            {{ props.row.nombreCurrier }}
           </b-table-column>
           <b-table-column
             field="descripcion"
@@ -83,6 +118,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 //Aqui logica del componente
 export default {
   name: 'TablaCargas',
@@ -92,96 +128,57 @@ export default {
       {
         id: 1,
       },
-      {
-        id: 2,
-      },
-      {
-        id: 3,
-      },
-      {
-        id: 4,
-      },
-      {
-        id: 5,
-      },
-      {
-        id: 5,
-      },
-      {
-        id: 5,
-      },
-    ];
-    const data = [
-      {
-        id: 1,
-        currier: 'Jesse',
-        descripcion: 'Simmons',
-        fechaRecibido: '2016-10-15 13:43:27',
-        recibidoPor: 'Manuel',
-      },
-      {
-        id: 2,
-        currier: 'John',
-        descripcion: 'Jacobs',
-        fechaRecibido: '2016-12-15 06:00:53',
-        recibidoPor: 'Ricardo',
-      },
-      {
-        id: 3,
-        currier: 'Tina',
-        descripcion: 'Gilbert',
-        fechaRecibido: '2016-04-26 06:26:28',
-        recibidoPor: 'Ricardo',
-      },
-      {
-        id: 4,
-        currier: 'Clarence',
-        descripcion: 'Flores',
-        fechaRecibido: '2016-04-10 10:28:46',
-        recibidoPor: 'Manuel',
-      },
-      {
-        id: 5,
-        currier: 'Anne',
-        descripcion: 'Lee',
-        fechaRecibido: '2016-12-06 14:38:38',
-        recibidoPor: 'Teresa',
-      },
-      {
-        id: 5,
-        currier: 'Anne',
-        descripcion: 'Lee',
-        fechaRecibido: '2016-12-06 14:38:38',
-        recibidoPor: 'Teresa',
-      },
-      {
-        id: 5,
-        currier: 'Anne',
-        descripcion: 'Lee',
-        fechaRecibido: '2016-12-06 14:38:38',
-        recibidoPor: 'Teresa',
-      },
     ];
     return {
+      modalCargaActivo: false,
       dataCarga,
-      data,
+      idDireccion: null,
       selected: dataCarga[1],
 
-      fieldsCarga: [
+      columnCarga: [
         {
-          field: 'id',
+          field: 'idCarga',
           label: 'Nº Rastreo',
           numeric: true,
         },
-      ],
-      columnCarga: [
         {
-          field: 'id',
-          label: 'Nº Rastreo',
-          numeric: true,
+          field: 'estado',
+          label: 'Estado',
+          numeric: false,
         },
       ],
     };
+  },
+  created() {
+    this.fetchCargas();
+  },
+  methods: {
+    ...mapActions('cargas', ['fetchCargas', 'aggCarga']),
+    ...mapActions('paquete', ['fetchPaquetes']),
+    ...mapActions('direccion', ['fetchDirecciones']),
+    cambioSeleccion() {
+      this.fetchPaquetes(this.selected.idCarga);
+    },
+    launchModal() {
+      this.modalCargaActivo = true;
+      this.fetchDirecciones();
+    },
+    alert() {
+      this.$buefy.dialog.alert(
+        'Hemos creado una nueva carga. Puedes empezar a agregar tus paquetes.'
+      );
+    },
+    crearNuevaCarga() {
+      this.aggCarga(this.idDireccion);
+      this.alert();
+      this.fetchCargas();
+      this.$forceUpdate();
+    },
+  },
+  computed: {
+    ...mapGetters('cargas', ['cargas']),
+    ...mapGetters('paquete', ['paquetes']),
+    ...mapGetters('direccion', ['direcciones']),
   },
 };
 </script>

@@ -6,6 +6,7 @@ import cargas from './modules/cargas';
 import session from './modules/session';
 import alerta from './modules/alerta';
 import direccion from './modules/direccion';
+import paquete from './modules/paquete';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     alerta,
     tempCrap,
     cargas,
+    paquete,
     direccion,
   },
 });
