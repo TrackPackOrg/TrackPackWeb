@@ -8,6 +8,7 @@
           </figure>
         </div>
         <div class="card-content">
+          <Alerta />
           <h4 class="title is-4">¡Inicia Sesión!</h4>
           <form>
             <b-field>
@@ -31,7 +32,10 @@
               </b-input>
             </b-field>
 
-            <b-button expanded @click="loginUser" type="is-primary"
+            <b-button
+              expanded
+              @click="enviarDatos(correo, contra)"
+              type="is-primary"
               >Iniciar</b-button
             >
           </form>
@@ -52,11 +56,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import Alerta from '@/components/alerta.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
-  components: {},
+  components: {
+    Alerta,
+  },
   data() {
     return {
       correo: '',
@@ -64,16 +71,16 @@ export default {
     };
   },
   methods: {
-    loginUser() {
-      if (
-        this.correo === this.storecorreo &&
-        this.contra === this.storecontra
-      ) {
-        this.$router.push('Perfil');
-      }
+    ...mapActions('session', ['iniciarSesion']),
+    enviarDatos(correo, contra) {
+      const data = {
+        correo: correo,
+        passwd: contra,
+      };
+      this.iniciarSesion(data);
     },
   },
-  computed: mapGetters(['storecorreo', 'storecontra', 'storeid']),
+  computed: mapGetters([]),
 };
 </script>
 <style scoped></style>

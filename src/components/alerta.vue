@@ -1,17 +1,20 @@
 <template>
   <div class="alerta">
     <b-message type="is-danger" aria-close-label="Close message"
-      >{{ this.error }}
+      >{{ mensaje }}
     </b-message>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'Alerta',
   components: {},
-  props: ['error'],
-  computed: {},
+  props: [],
+  computed: {
+    ...mapGetters('alerta', ['mensaje']),
+  },
 };
 </script>
 

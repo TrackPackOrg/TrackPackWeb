@@ -54,7 +54,7 @@ const actions = {
         })
         .then(() => {
           localStorage.setItem('condigoEnviado', false);
-          window.location.href = '/perfil';
+          window.location.href = '/';
         });
 
       commit('setCodigoEnviado', localStorage.getItem('codigoEnviado'));

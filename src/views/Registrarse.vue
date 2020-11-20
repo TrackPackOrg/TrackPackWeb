@@ -134,7 +134,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('usuario', [
+    ...mapActions('tempCrap', [
       'registrarUsuario',
       'dioErrorVerifContra',
       'dioErrorCamposVacios',
@@ -170,7 +170,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('usuario', ['dioError', 'error', 'token', 'codigoEnviado']),
+    ...mapGetters('tempCrap', ['dioError', 'error', 'token', 'codigoEnviado']),
     camposLlenos() {
       if (this.nombre === '') return false;
       if (this.apellido === '') return false;

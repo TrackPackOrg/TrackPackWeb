@@ -49,13 +49,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions('usuario', ['verifCodigo']),
+    ...mapActions('tempCrap', ['verifCodigo']),
     enviarCodigo() {
       this.verifCodigo(this.codigo);
     },
   },
   computed: {
-    ...mapGetters('usuario', ['dioError', 'error']),
+    ...mapGetters('tempCrap', ['dioError', 'error']),
   },
 };
 </script>

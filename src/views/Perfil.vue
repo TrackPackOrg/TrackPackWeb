@@ -9,11 +9,9 @@
             style="border-right :#e6e6e6 1px solid"
           >
             <img src="@/assets/user-avatar.png" />
-            <h4 class="title is-4">
-              {{ this.storenombre + ' ' + this.storeapellido }}
-            </h4>
+            <h4 class="title is-4">asd</h4>
             <p>
-              <strong>Teléfono:</strong> {{ this.storetelefono }}
+              <strong>Teléfono:</strong> {{}}
               <span>
                 <b-icon pack="fas" icon="edit" size="is-small"> </b-icon>
               </span>
@@ -26,24 +24,7 @@
             </div>
             <br />
             <br />
-            <a @click="this.launchModal">Ver mis direcciones</a>
-
-            <b-modal v-model="isModalActive" class="columns is-vcentered">
-              <div class="card column is-two-thirds is-absolute-centered">
-                <h1 class="title">Hello</h1>
-                <template>
-                  <b-table :data="data" :columns="columns">
-                    <b-table-column
-                      field="id"
-                      label="Dirección"
-                      width="40"
-                      numeric
-                    >
-                    </b-table-column>
-                  </b-table>
-                </template>
-              </div>
-            </b-modal>
+            <ModalDirecciones />
           </div>
         </div>
       </div>
@@ -54,6 +35,7 @@
 <script>
 import Navbar from '@/components/nav.vue';
 import TablaCargas from '@/components/tablacargas.perfil.vue';
+import ModalDirecciones from '@/components/modaldirecciones.perfil.vue';
 
 import { mapActions, mapGetters } from 'vuex';
 
@@ -62,21 +44,17 @@ export default {
   components: {
     Navbar,
     TablaCargas,
+    ModalDirecciones,
   },
   methods: {
-    ...mapActions(['cambiarNombre']),
-    launchModal() {
-      this.isModalActive = true;
-      console.log(this.isModalActive);
-    },
+    ...mapActions(['']),
   },
   data() {
     return {
-      isCodeSent: true,
       isModalActive: false,
     };
   },
-  computed: mapGetters(['storenombre', 'storeapellido', 'storetelefono']),
+  computed: mapGetters(['']),
 };
 </script>
 <style scoped></style>

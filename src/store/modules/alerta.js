@@ -1,11 +1,11 @@
 //import axios from 'axios';
 
 const state = {
-  mensajeAlerta: '',
+  mensaje: '',
 };
 
 const getters = {
-  mensajeAlerta: (state) => state.mensajeAlerta,
+  mensaje: (state) => state.mensaje,
 };
 
 const actions = {};
@@ -17,4 +17,5 @@ export default {
   getters,
   actions,
   mutations,
+  namespaced: true,
 };
