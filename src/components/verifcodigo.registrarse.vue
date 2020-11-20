@@ -6,7 +6,7 @@
       </figure>
     </div>
     <div class="card-content">
-      <Alerta v-if="this.dioError" :error="this.error" />
+      <Alerta />
 
       <p class="title is-5">Revisa tu correo electónico.</p>
       <p>

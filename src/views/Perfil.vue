@@ -9,13 +9,8 @@
             style="border-right :#e6e6e6 1px solid"
           >
             <img src="@/assets/user-avatar.png" />
-            <h4 class="title is-4">asd</h4>
-            <p>
-              <strong>Teléfono:</strong> {{}}
-              <span>
-                <b-icon pack="fas" icon="edit" size="is-small"> </b-icon>
-              </span>
-            </p>
+            <h4 class="title is-4"></h4>
+            <p></p>
           </div>
           <div class="column">
             <div class="m-3">
@@ -54,7 +49,8 @@ export default {
       isModalActive: false,
     };
   },
-  computed: mapGetters(['']),
+
+  computed: mapGetters('session', ['sesion']),
 };
 </script>
 <style scoped></style>

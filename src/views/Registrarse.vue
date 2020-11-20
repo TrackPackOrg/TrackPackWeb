@@ -12,7 +12,7 @@
                 />
               </figure>
             </div>
-            <Alerta v-if="this.dioError" :error="this.error" />
+            <Alerta />
             <div class="card-content">
               <form>
                 <div class="columns m">
@@ -29,6 +29,7 @@
                       icon-pack="fas"
                       icon="signature"
                       v-model="nombre"
+                      maxlength="30"
                     >
                     </b-input>
                   </b-field>
@@ -40,6 +41,7 @@
                       placeholder="Apellido"
                       icon="signature"
                       v-model="apellido"
+                      maxlength="30"
                     >
                     </b-input>
                   </b-field>
@@ -54,6 +56,7 @@
                     icon-pack="fas"
                     icon="envelope"
                     v-model="correo"
+                    maxlength="100"
                   >
                   </b-input>
                 </b-field>
@@ -98,6 +101,7 @@
                     icon-pack="fas"
                     icon="phone"
                     v-model="telefono"
+                    maxlength="8"
                   >
                   </b-input>
                 </b-field>
@@ -147,7 +151,7 @@ export default {
             apellido: this.apellido,
             correo: this.correo,
             passwd: this.contra,
-            telefono: this.telefono,
+            telefono: `504${this.telefono}`,
           };
           this.registrarUsuario(nuevoUsuario);
           this.$forceUpdate();
@@ -170,7 +174,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('tempCrap', ['dioError', 'error', 'token', 'codigoEnviado']),
+    ...mapGetters('tempCrap', ['token', 'codigoEnviado']),
     camposLlenos() {
       if (this.nombre === '') return false;
       if (this.apellido === '') return false;
