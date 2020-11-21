@@ -4,6 +4,7 @@
 
     <b-modal v-model="activo" class="columns is-vcentered">
       <div class="card column is-two-thirds is-absolute-centered">
+        <Alerta />
         <h1 class="title">Mis direcciones</h1>
         <TablaDirecciones v-show="!aggNueva" />
         <FormNuevaDireccion
@@ -26,12 +27,14 @@
 <script>
 import TablaDirecciones from '@/components/tabladirecciones.perfil.vue';
 import FormNuevaDireccion from '@/components/formnuevadireccion.perfil.vue';
+import Alerta from '@/components/alerta.vue';
 
 export default {
   name: 'NombreComponente',
   components: {
     TablaDirecciones,
     FormNuevaDireccion,
+    Alerta,
   },
   props: [],
   data() {

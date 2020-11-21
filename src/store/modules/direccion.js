@@ -41,8 +41,11 @@ const actions = {
     Axios.post('http://localhost:3300/address/customer', payload, {
       headers: { token: this.state.session.sesion },
     })
-      .then(() => commit('mutateNuevaDireccion', payload))
-      .catch((err) => console.log(err.response.data.error));
+      .then(() => {
+        commit('mutateNuevaDireccion', payload);
+        commit('mutateAlerta', '');
+      })
+      .catch((err) => commit('mutateAlerta', err.response.data.error));
   },
 };
 
@@ -51,6 +54,9 @@ const mutations = {
   mutateDepartamentos: (state, payload) => (state.departamentos = payload),
   mutateMunicipios: (state, payload) => (state.municipios = payload),
   mutateNuevaDireccion: (state, payload) => state.direcciones.unshift(payload),
+  mutateAlerta(state, payload) {
+    this.state.alerta.mensaje = payload;
+  },
 };
 
 export default {

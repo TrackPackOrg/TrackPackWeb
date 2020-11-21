@@ -24,7 +24,7 @@ const actions = {
     Axios.post('http://localhost:3300/package', data, {
       headers: { token: this.state.session.sesion },
     })
-      .then()
+      .then(() => commit('mutateAlerta', ''))
       .catch((err) => commit('mutateAlerta', err.response.data.error));
   },
   // eslint-disable-next-line no-unused-vars
@@ -34,9 +34,11 @@ const actions = {
       headers: {
         token: this.state.session.sesion,
       },
-    }).then(() => {
-      commit();
-    });
+    })
+      .then(() => {
+        commit('mutateAlerta', '');
+      })
+      .catch((err) => commit('mutateAlerta', err.response.data.error));
   },
 };
 

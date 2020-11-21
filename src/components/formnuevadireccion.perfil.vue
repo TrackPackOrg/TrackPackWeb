@@ -26,10 +26,10 @@
     </b-field>
 
     <b-field label="Direccion 1">
-      <b-input v-model="direccion1"></b-input>
+      <b-input v-model="direccion1" maxlength="100"></b-input>
     </b-field>
     <b-field label="Direccion 2 (Opcional)">
-      <b-input v-model="direccion2"></b-input>
+      <b-input v-model="direccion2" maxlength="100"></b-input>
     </b-field>
     <b-button class="" type="is-primary" @click="enviarForm" expanded
       >Guardar</b-button

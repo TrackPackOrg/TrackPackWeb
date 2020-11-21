@@ -26,7 +26,10 @@ const actions = {
         headers: { token: this.state.session.sesion },
       }
     )
-      .then((res) => commit('mutateNuevaCarga', res.data))
+      .then((res) => {
+        commit('mutateNuevaCarga', res.data);
+        commit('mutateAlerta', '');
+      })
       .catch((err) => commit('mutateAlerta', err.response.data.error));
   },
 };

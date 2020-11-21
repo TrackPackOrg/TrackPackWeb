@@ -20,6 +20,7 @@ const actions = {
         .then(() => localStorage.setItem('codigoEnviado', true));
       commit('setToken', localStorage.getItem('token'));
       commit('setCodigoEnviado', localStorage.getItem('codigoEnviado'));
+      commit('mutateAlerta', '');
     } catch (err) {
       commit('mutateAlerta', err.response.data.error);
     }
@@ -48,6 +49,7 @@ const actions = {
         .then(() => {
           localStorage.setItem('condigoEnviado', false);
           window.location.href = '/';
+          commit('mutateAlerta', '');
         });
 
       commit('setCodigoEnviado', localStorage.getItem('codigoEnviado'));
