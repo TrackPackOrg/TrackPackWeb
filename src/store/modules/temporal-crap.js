@@ -22,16 +22,36 @@ const actions = {
       commit('setCodigoEnviado', localStorage.getItem('codigoEnviado'));
       commit('mutateAlerta', '');
     } catch (err) {
-      commit('mutateAlerta', err.response.data.error);
+      const data = {
+        mensaje: err.response.data.error,
+        tipo: 'is-danger',
+      };
+      commit('mutateAlerta', data);
     }
   },
 
+  dioError({ commit }, mensaje) {
+    const data = {
+      mensaje: mensaje,
+      tipo: 'is-danger',
+    };
+    commit('mutateAlerta', data);
+  },
+
   dioErrorVerifContra({ commit }) {
-    commit('mutateAlerta', 'Las contraseñas no coinciden.');
+    const data = {
+      mensaje: 'Las contraseñas no coinciden.',
+      tipo: 'is-danger',
+    };
+    commit('mutateAlerta', data);
   },
 
   dioErrorCamposVacios({ commit }) {
-    commit('mutateAlerta', 'Todos los campos son obligatorios');
+    const data = {
+      mensaje: 'Todos los campos son obligatorios',
+      tipo: 'is-danger',
+    };
+    commit('mutateAlerta', data);
   },
 
   async verifCodigo({ commit }, codigo) {
@@ -63,7 +83,8 @@ const mutations = {
   setToken: (state, token) => (state.token = token),
   setCodigoEnviado: (state, estado) => (state.codigoEnviado = estado),
   mutateAlerta(state, payload) {
-    this.state.alerta.mensaje = payload;
+    this.state.alerta.mensaje = payload.mensaje;
+    this.state.alerta.tipo = payload.tipo;
   },
 };
 

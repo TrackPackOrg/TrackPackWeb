@@ -15,8 +15,9 @@
                 v-for="direccion in direcciones"
                 :key="direccion.idDireccion"
                 :value="direccion.idDireccion"
-                >{{ direccion.direccion }}, {{ direccion.departamento }}</option
               >
+                {{ direccion.direccion }}, {{ direccion.departamento }}
+              </option>
             </b-select>
           </b-field>
           <b-button
@@ -65,8 +66,9 @@
                 v-for="currier in curriers"
                 :key="currier.idCurrier"
                 :value="currier.idCurrier"
-                >{{ currier.nombreCurrier }}</option
               >
+                {{ currier.nombreCurrier }}
+              </option>
             </b-select>
           </b-field>
           <b-field label="Descripión">
@@ -162,9 +164,7 @@
           </b-table-column>
           <b-table-column label="Acciones" width="20">
             <span>
-              <b-icon pack="fas" type="is-danger" icon="trash">
-                asd
-              </b-icon>
+              <b-icon pack="fas" type="is-danger" icon="trash"> asd </b-icon>
             </span>
           </b-table-column>
         </b-table>
@@ -315,6 +315,7 @@ export default {
         confirmText: 'Eliminar Paquete',
         type: 'is-danger',
         hasIcon: true,
+        cancelText: 'Cancelar',
         onConfirm: () => {
           this.eliminarPaquete(this.idPaquete);
           this.$forceUpdate();

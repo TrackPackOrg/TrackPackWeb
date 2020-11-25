@@ -1,17 +1,22 @@
 <template>
   <div class="tabla-direccioness">
     <template>
-      <b-table :data="this.direcciones" sticky-header height="300">
+      <b-table
+        :data="this.direcciones"
+        sticky-header
+        height="300"
+        class="text-is-1"
+      >
         <b-table-column
           field="direccion"
           label="Direccion"
-          width="40"
+          width="20"
           numeric
           v-slot="props"
         >
-          {{ props.row.direccion }}
+          <p class="is-size-10">{{ props.row.direccion }}</p>
         </b-table-column>
-        <b-table-column label="Municipio" width="40" numeric v-slot="props">
+        <b-table-column label="Municipio" width="30" numeric v-slot="props">
           {{ props.row.municipio }}
         </b-table-column>
         <b-table-column label="Departamento" width="40" numeric v-slot="props">

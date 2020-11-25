@@ -1,7 +1,7 @@
 <template>
   <div class="home columns">
     <div class="is-absolute-centered column is-one-fifth">
-      <div class="card  ">
+      <div class="card">
         <div class="card-image">
           <figure class="image">
             <img src="../assets/login-image.jpg" alt="" />
@@ -13,7 +13,7 @@
           <form>
             <b-field>
               <b-input
-                placeholder="Ingersa tu correo electrónico."
+                placeholder="Ingresa tu correo electrónico."
                 type="email"
                 icon-pack="fas"
                 icon="envelope"
@@ -51,6 +51,7 @@
           >
         </div>
       </div>
+      <a href="/login-empleado">Soy un Empleado</a>
     </div>
   </div>
 </template>

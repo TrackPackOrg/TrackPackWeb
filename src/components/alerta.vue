@@ -1,6 +1,6 @@
 <template>
   <div class="alerta">
-    <b-message type="is-danger" aria-close-label="Close message"
+    <b-message :type="this.tipo" aria-close-label="Close message"
       >{{ mensaje }}
     </b-message>
   </div>
@@ -13,7 +13,7 @@ export default {
   components: {},
   props: [],
   computed: {
-    ...mapGetters('alerta', ['mensaje']),
+    ...mapGetters('alerta', ['mensaje', 'tipo']),
   },
 };
 </script>

@@ -20,7 +20,7 @@ const actions = {
       },
     })
       .then((res) => {
-        commit('mutateDirecciones', res.data.result);
+        commit('mutateDirecciones', res.data.results);
       })
       .catch((err) => console.log(err.response.data.error));
   },
@@ -34,18 +34,32 @@ const actions = {
   fetchMunicipios({ commit }, event) {
     Axios.get('http://localhost:3300/address/cities', {
       params: { stateId: event.target.value },
-    }).then((res) => commit('mutateMunicipios', res.data.cities));
+    }).then((res) => {
+      commit('mutateMunicipios', res.data.cities);
+    });
   },
 
   aggDireccion({ commit }, payload) {
     Axios.post('http://localhost:3300/address/customer', payload, {
       headers: { token: this.state.session.sesion },
     })
-      .then(() => {
+      .then((res) => {
+        console.log(res.data);
+        const data = {
+          mensaje: 'Tu dirección se agregó correctamente.',
+          tipo: 'is-success',
+        };
+        console.log(data);
         commit('mutateNuevaDireccion', payload);
-        commit('mutateAlerta', '');
+        commit('mutateAlerta', data);
       })
-      .catch((err) => commit('mutateAlerta', err.response.data.error));
+      .catch((err) => {
+        const data = {
+          mensaje: err.response.data.error,
+          tipo: 'is-danger',
+        };
+        commit('mutateAlerta', data);
+      });
   },
 };
 
@@ -55,7 +69,8 @@ const mutations = {
   mutateMunicipios: (state, payload) => (state.municipios = payload),
   mutateNuevaDireccion: (state, payload) => state.direcciones.unshift(payload),
   mutateAlerta(state, payload) {
-    this.state.alerta.mensaje = payload;
+    this.state.alerta.mensaje = payload.mensaje;
+    this.state.alerta.tipo = payload.tipo;
   },
 };
 

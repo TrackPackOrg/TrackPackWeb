@@ -18,15 +18,20 @@ const actions = {
       .then(() => commit('mutateSesion', localStorage.getItem('sesion')))
       .then(() => (window.location.href = 'perfil'))
       .catch((err) => {
-        commit('mutateAlerta', err.response.data.error);
-        return err.response.data.error;
+        const data = {
+          mensaje: err.response.data.error,
+          tipo: 'is-danger',
+        };
+        commit('mutateAlerta', data);
+        return data;
       });
   },
 };
 
 const mutations = {
   mutateAlerta(state, payload) {
-    this.state.alerta.mensaje = payload;
+    this.state.alerta.mensaje = payload.mensaje;
+    this.state.alerta.tipo = payload.tipo;
   },
   mutateSesion: (state, payload) => (state.sesion = payload),
 };

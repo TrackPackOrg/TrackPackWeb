@@ -47,6 +47,7 @@ export default {
   data() {
     return {
       isModalActive: false,
+      input: 'Texto prueba',
     };
   },
 

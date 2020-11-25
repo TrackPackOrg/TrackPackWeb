@@ -3,15 +3,11 @@
     <a @click="this.launchModal">Ver mis direcciones</a>
 
     <b-modal v-model="activo" class="columns is-vcentered">
-      <div class="card column is-two-thirds is-absolute-centered">
+      <div class="card column is-12 is-absolute-centered">
         <Alerta />
         <h1 class="title">Mis direcciones</h1>
         <TablaDirecciones v-show="!aggNueva" />
-        <FormNuevaDireccion
-          v-show="aggNueva"
-          :estado="aggNueva"
-          @estadoCambio="aggNueva = $event"
-        />
+        <FormNuevaDireccion v-show="aggNueva" />
 
         <b-button
           class="m-2"
@@ -45,6 +41,7 @@ export default {
   },
   methods: {
     launchModal() {
+      this.aggNueva = false;
       this.activo = true;
     },
   },

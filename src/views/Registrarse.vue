@@ -17,7 +17,7 @@
               <form>
                 <div class="columns m">
                   <label for="nombre" class="column">Nombre</label>
-                  <label for="nombre" class="column">Nombre</label>
+                  <label for="nombre" class="column">Apellido</label>
                 </div>
                 <div class="columns">
                   <b-field class="column">
@@ -93,6 +93,11 @@
 
                 <label for="telefono">Teléfono</label>
                 <b-field class="">
+                  <p class="control">
+                    <span class="button is-static">{{
+                      this.extensionTelefono
+                    }}</span>
+                  </p>
                   <b-input
                     name="telefono"
                     placeholder="Número telefónico"
@@ -142,19 +147,32 @@ export default {
       'registrarUsuario',
       'dioErrorVerifContra',
       'dioErrorCamposVacios',
+      'dioError',
     ]),
     enviarForm() {
+      let regExp = /^\(?([2,3,9,8]{1})\)?([0-9]{7})$/;
+
       if (this.camposLlenos) {
         if (this.verifContra === this.contra) {
-          const nuevoUsuario = {
-            nombre: this.nombre,
-            apellido: this.apellido,
-            correo: this.correo,
-            passwd: this.contra,
-            telefono: `504${this.telefono}`,
-          };
-          this.registrarUsuario(nuevoUsuario);
-          this.$forceUpdate();
+          if (this.telefono.length === 8) {
+            if (this.telefono.match(regExp)) {
+              const nuevoUsuario = {
+                nombre: this.nombre,
+                apellido: this.apellido,
+                correo: this.correo,
+                passwd: this.contra,
+                telefono: this.extensionTelefono + this.telefono,
+              };
+              this.registrarUsuario(nuevoUsuario);
+              this.$forceUpdate();
+            } else {
+              this.dioError(
+                'El número de telefono debe empezar por 8, 9, 3 o 2'
+              );
+            }
+          } else {
+            this.dioError('El telefono debe contener 8 caracteres.');
+          }
         } else {
           this.dioErrorVerifContra();
         }
@@ -165,6 +183,7 @@ export default {
   },
   data() {
     return {
+      extensionTelefono: '504',
       nombre: '',
       apellido: '',
       correo: '',

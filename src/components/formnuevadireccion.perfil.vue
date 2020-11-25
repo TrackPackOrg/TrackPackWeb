@@ -3,7 +3,7 @@
     <b-field label="Departamento">
       <select
         class="select"
-        @click="fetchMunicipios($event)"
+        @click="recibeMunicipios($event)"
         v-model="departamento"
       >
         <option
@@ -52,7 +52,7 @@ export default {
       direccion2: '',
     };
   },
-  props: ['estado'],
+  props: [],
   created() {
     this.fetchDepartamentos();
   },
@@ -62,6 +62,12 @@ export default {
       'fetchMunicipios',
       'aggDireccion',
     ]),
+    ...mapActions('alerta', ['dioError']),
+
+    recibeMunicipios(event) {
+      this.municipio = '';
+      this.fetchMunicipios(event);
+    },
 
     obtenerGeolocalizacion() {
       navigator.geolocation.getCurrentPosition((pos) => {
@@ -74,13 +80,24 @@ export default {
         idMunicipio: this.municipio,
         direccion: `${this.direccion1}, ${this.direccion2}`,
       };
-      this.aggDireccion(direccion);
-      this.estado = false;
-      this.$emit('estadoCambio', this.estado);
+      if (this.direccion1 === '') {
+        const data = {
+          mensaje: 'La dirección 1 es obligatoria',
+          tipo: 'is-danger',
+        };
+        this.dioError(data);
+      } else {
+        this.aggDireccion(direccion);
+      }
+      if (this.tipo === 'is-success') {
+        this.departamento = '';
+        (this.municipio = ''), (this.direccion1 = ''), (this.direccion2 = '');
+      }
     },
   },
   computed: {
     ...mapGetters('direccion', ['departamentos', 'municipios']),
+    ...mapGetters('alerta', ['tipo']),
   },
 };
 </script>

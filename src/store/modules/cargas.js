@@ -27,10 +27,20 @@ const actions = {
       }
     )
       .then((res) => {
+        const data = {
+          mensaje: 'Tu carga se agregó correctamente',
+          tipo: 'is-success',
+        };
         commit('mutateNuevaCarga', res.data);
-        commit('mutateAlerta', '');
+        commit('mutateAlerta', data);
       })
-      .catch((err) => commit('mutateAlerta', err.response.data.error));
+      .catch((err) => {
+        const data = {
+          mensaje: err.response.data.error,
+          tipo: 'is-danger',
+        };
+        commit('mutateAlerta', data);
+      });
   },
 };
 
@@ -38,7 +48,8 @@ const mutations = {
   mutateCargas: (state, payload) => (state.cargas = payload),
   mutateNuevaCarga: (state, payload) => state.cargas.unshift(payload),
   mutateAlerta(state, payload) {
-    this.state.alerta.mensaje = payload;
+    this.state.alerta.mensaje = payload.mensaje;
+    this.state.alerta.tipo = payload.tipo;
   },
 };
 
