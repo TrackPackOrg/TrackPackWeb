@@ -1,16 +1,16 @@
 <template>
   <div>
-    <FormInicioSesion />
+    <FormRegistro />
   </div>
 </template>
 
 <script>
-import FormInicioSesion from '../components/login/formInicioSesion';
+import FormRegistro from '../components/registro/formRegistro';
 
 export default {
   props: [],
   components: {
-    FormInicioSesion,
+    FormRegistro,
   },
   methods: {},
 };

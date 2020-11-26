@@ -1,17 +1,13 @@
 <template>
-  <div class="comp-name">
-    <!-- aquí la estructura del componente -->
-  </div>
+  <div></div>
 </template>
 
 <script>
-//Aqui logica del componente
 export default {
-  name: 'NombreComponente',
+  props: [],
   components: {},
+  methods: {},
 };
 </script>
 
-<style>
-/* Aquí estilos del componente */
-</style>
+<style></style>
