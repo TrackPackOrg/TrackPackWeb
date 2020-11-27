@@ -165,8 +165,8 @@ export default {
       handler.preventDefault();
       if (this.formOk) {
         const user = {
-          nombre: this.nombre,
-          apellido: this.apellido,
+          nombre: this.nombre.toLowerCase(),
+          apellido: this.apellido.toLowerCase(),
           correo: this.email,
           passwd: this.contra,
           telefono: '504' + this.telefono,

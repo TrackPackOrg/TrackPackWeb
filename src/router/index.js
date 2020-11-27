@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Login from '../views/Login.vue'
+import Login from '../views/Login.vue';
 
 Vue.use(VueRouter);
 
@@ -22,18 +22,21 @@ const routes = [
   {
     path: '/verificacion-codigo',
     name: 'VerificacionCodigo',
-    
-    component: () =>
-      import('../views/VerificacionCodigo'),
+
+    component: () => import('../views/VerificacionCodigo'),
   },
   {
     path: '/dashboard-cliente',
     name: 'DashboardCliente',
-    
-    component: () =>
-      import('../views/DashboardCliente'),
+
+    component: () => import('../views/DashboardCliente'),
   },
-  
+  {
+    path: '/perfil',
+    name: 'Perfil',
+
+    component: () => import('../views/Perfil'),
+  },
 ];
 
 const router = new VueRouter({
