@@ -36,7 +36,11 @@ export default {
         params:{
           idCarga:data.idCarga
         }
-      }).then(res => this.tracking = res.data.results).catch(err => console.log(err.response.data))
+      }).then(res => {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        console.log(res.data.results[0].datetimeTrack.toLocaleString('es-HN', options));
+        this.tracking = res.data.results
+      }).catch(err => console.log(err.response.data))
     },
   },
 
