@@ -121,12 +121,13 @@
                 <td>{{ paquete.tipo }}</td>
                 <td>{{ paquete.nombreCurrier }}</td>
                 <td>{{ paquete.descripcion }}</td>
-                <td>{{ paquete.datetimeRecibido }}</td>
+                <td>{{ paquete.datetimeRecibido.substring(0,10) }}</td>
                 <td>{{ paquete.recibidoPor }}</td>
                 <td>
                   <div class="columns">
                     <div class="column">
                       <button
+                       :class="carga.estado ==='Esperando pickup' || carga.estado === 'En tránsito' ? 'is-static':null"
                         class="button is-small is-danger"
                         @click="confirmCustomDelete(paquete.idPaquete)"
                       >
@@ -145,9 +146,10 @@
           </table>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success" @click="mostrarModal">
+          <button class="button is-success" @click="mostrarModal" :class="carga.estado ==='Esperando pickup' || carga.estado === 'En tránsito' ? 'is-static':null"  >
             Agregar Nuevo
           </button>
+          <button type="button" name="button" class="button is-success" :class="carga.estado === 'En tránsito' ? null:'is-static'" @click="mostrarRastreo">Rastrear</button>
         </footer>
       </div>
     </div>
@@ -155,6 +157,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 import Axios from 'axios';
 export default {
   data() {
@@ -173,10 +176,12 @@ export default {
   props: ['activo', 'paquetes', 'carga'],
   components: {},
   methods: {
+    ...mapActions('utils',['cambiarOpcion', 'estableceIdCarga']),
     cerrarModalPaquetes() {
       this.$emit('cerrarModalPaquetes', this.paquetes);
     },
     agregarPaquete(handler) {
+
       handler.preventDefault();
       const data = {
         idCarga: this.carga.idCarga,
@@ -261,6 +266,7 @@ export default {
         });
     },
     cerrarModal() {
+      console.log(this.carga.estado);
       this.modalActivo = false;
     },
     mostrarModal() {
@@ -272,6 +278,11 @@ export default {
     seleccionarTipo(handler) {
       this.idTipo = handler.target.value;
     },
+    mostrarRastreo(){
+      this.cerrarModal()
+      this.estableceIdCarga(this.carga.idCarga)
+      this.cambiarOpcion('rastreo')
+    }
   },
 
   mounted() {

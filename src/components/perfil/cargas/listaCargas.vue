@@ -114,7 +114,7 @@
     </div>
     <hr />
     <div class="cargas">
-      <CardCarga v-for="carga in cargas" :key="carga.idCarga" :carga="carga" />
+      <CardCarga v-for="carga in cargas" :key="carga.idCarga" :carga="carga" @recargaCargas='retrieveCargas'/>
     </div>
   </div>
 </template>
@@ -160,6 +160,7 @@ export default {
         );
     },
     retrieveCargas() {
+      this.$forceUpdate()
       Axios.get(`${process.env.VUE_APP_API}load`, {
         headers: { token: localStorage.getItem('token') },
       })

@@ -8,6 +8,7 @@
       <div class="column">
         <ListaCargas v-if="opcionMenu === 'cargas'" />
         <TablaDirecciones v-if="opcionMenu === 'direcciones'" />
+        <Rastreo v-if="opcionMenu ==='rastreo'"/>
       </div>
     </div>
   </div>
@@ -18,6 +19,7 @@ import MenuCliente from '../components/perfil/menu';
 import AppBar from '../components/perfil/appbar';
 import ListaCargas from '../components/perfil/cargas/listaCargas';
 import TablaDirecciones from '../components/perfil/direcciones/tablaDirecciones';
+import Rastreo from './Tracking'
 import { mapGetters } from 'vuex';
 export default {
   data() {
@@ -29,6 +31,7 @@ export default {
     AppBar,
     ListaCargas,
     TablaDirecciones,
+    Rastreo,
   },
   methods: {},
   computed: {

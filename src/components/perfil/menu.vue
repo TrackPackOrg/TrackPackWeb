@@ -14,11 +14,11 @@
           ><span><i class="fas fa-address-book"></i></span> Mis direcciones</a
         >
       </li>
-      <li>
+      <!-- <li>
         <a @click="irPerfil">
           <span><i class="fas fa-user"></i></span>Mi Perfil</a
         >
-      </li>
+      </li> -->
       <li>
         <a @click="cerrarSesion">
           <span><i class="fas fa-sign-out-alt"></i></span>Cerrar Sesión</a
