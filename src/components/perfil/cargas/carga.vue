@@ -21,7 +21,7 @@
           </div>
           <div class="tile is-parent">
             <div class="tile is-child ">
-              <p class="subtitle">{{ carga.estado }}</p>
+              <p class="subtitle has-text-weight-semibold	" :class="carga.estado === 'Entregado'? 'has-text-success	': null">{{ carga.estado }}</p>
             </div>
           </div>
         </div>
