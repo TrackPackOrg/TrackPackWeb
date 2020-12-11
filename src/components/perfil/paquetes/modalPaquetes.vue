@@ -127,7 +127,7 @@
                   <div class="columns">
                     <div class="column">
                       <button
-                       :class="carga.estado ==='Esperando pickup' || carga.estado === 'En tránsito' ? 'is-static':null"
+                       :class="carga.estado ==='Esperando pickup' || carga.estado ==='Entregado' ||carga.estado === 'En tránsito' ? 'is-static':null"
                         class="button is-small is-danger"
                         @click="confirmCustomDelete(paquete.idPaquete)"
                       >
@@ -146,10 +146,10 @@
           </table>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success" @click="mostrarModal" :class="carga.estado ==='Esperando pickup' || carga.estado === 'En tránsito' ? 'is-static':null"  >
+          <button class="button is-success" @click="mostrarModal" :class="carga.estado ==='Esperando pickup' || carga.estado ==='Entregado' || carga.estado === 'En tránsito' ? 'is-static':null"  >
             Agregar Nuevo
           </button>
-          <button type="button" name="button" class="button is-success" :class="carga.estado === 'En tránsito' ? null:'is-static'" @click="mostrarRastreo">Rastrear</button>
+          <button type="button" name="button" class="button is-success" :class="carga.estado === 'En tránsito' || carga.estado ==='Entregado' || ? null:'is-static'" @click="mostrarRastreo">Rastrear</button>
         </footer>
       </div>
     </div>
