@@ -196,13 +196,9 @@ export default {
           }
         )
           .then((res) => {
+           
             this.idCargaNueva = res.data.idCarga;
-          })
-          .catch((err) => {
-            this.mensaje = err.response.data.error;
-          });
-      }
-      if (this.idCargaNueva) {
+            if (this.idCargaNueva) {
         const data = {
           idCarga: this.idCargaNueva,
           trackingUsa: this.rastreo,
@@ -216,11 +212,21 @@ export default {
           .then(() => {
             this.retrieveCargas();
             this.cerrarModal();
+             this.rastreo =''
+            this.descripcion= ''
+            this.idTipo = null
+            this.idCurrier= null
           })
           .catch((err) => {
             this.mensaje = err.response.data.error;
           });
       }
+          })
+          .catch((err) => {
+            this.mensaje = err.response.data.error;
+          });
+      }
+      
     },
     mostrarModal() {
       this.modalActivo = true;

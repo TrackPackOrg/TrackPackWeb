@@ -16,7 +16,7 @@
           <div class="tile is-6 is-vertical is-parent">
             <div class="tile is-child">
               <p class="">Paquetes</p>
-              <p class="title">{{paquetes.filter(paquete => paquete.datetimeRecibido != null).length}}/{{ paquetes.length }}</p><p>Recibidos</p>
+              <p class="title">{{paquetes.filter(paquete => paquete.datetimeRecibido != 'SE').length}}/{{ paquetes.length }}</p><p>{{(paquetes.filter(paquete => paquete.datetimeRecibido != 'SE').length/paquetes.length)*100}}% de tus paquetes recibidos.</p>
             </div>
           </div>
           <div class="tile is-parent">

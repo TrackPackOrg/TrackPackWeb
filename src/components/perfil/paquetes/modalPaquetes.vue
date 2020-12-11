@@ -194,6 +194,10 @@ export default {
         headers: { token: localStorage.getItem('token') },
       })
         .then(() => {
+          this.rastreo = ''
+          this.idTipo = null
+          this.descripcion= ''
+          this.idCurrier= null
           this.cerrarModal();
           this.retrievePaquetes();
         })

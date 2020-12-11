@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div>
     <div class="modal" :class="modalActivo ? 'is-active' : null">
       <div class="modal-background"></div>
@@ -68,14 +68,14 @@
                 />
               </div>
             </div>
-            <div class="field">
+            <!-- <div class="field">
               <div class="control">
                 <label class="checkbox">
                   <input type="checkbox" />
                   Marcar como preferida
                 </label>
               </div>
-            </div>
+            </div> -->
             <article class="message is-danger" v-if="mensaje">
               <div class="message-body">
                 {{ mensaje }}
@@ -165,7 +165,7 @@ export default {
           this.mensaje = '';
           this.cambiarOpcion('carga');
           this.cerrarModal();
-          this.$forceUpdate();
+          this.$emit('guardarDireccion');
         })
         .catch((err) => (this.mensaje = err.response));
     },

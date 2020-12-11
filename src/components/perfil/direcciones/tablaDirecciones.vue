@@ -68,14 +68,14 @@
                 />
               </div>
             </div>
-            <div class="field">
+            <!-- <div class="field">
               <div class="control">
                 <label class="checkbox">
                   <input type="checkbox" />
                   Marcar como preferida
                 </label>
               </div>
-            </div>
+            </div> -->
             <article class="message is-danger" v-if="mensaje">
               <div class="message-body">
                 {{ mensaje }}
@@ -111,6 +111,7 @@
     </div>
     <hr />
     <Direccion
+    @guardarDireccion="retrieveDirecciones"
       v-for="direccion in direcciones"
       :key="direccion.idDireccion"
       :direccion="direccion"
